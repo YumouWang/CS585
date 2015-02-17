@@ -10,7 +10,7 @@ public class GenerateTransactions {
 		int minCustId = 1;
 		int maxCustId = 50000;
 		int randomAge = random.nextInt(maxCustId) % (maxCustId - minCustId + 1) + minCustId;
-		return String.valueOf(randomAge);
+		return String.valueOf(randomAge).trim();
 	}
 
 	public String getTransTotal(Random random) {
@@ -61,9 +61,18 @@ public class GenerateTransactions {
 		try {
 			fosCustomers = new FileOutputStream(customers);
 			outCustomers = new OutputStreamWriter(fosCustomers, "US-ASCII");
+			int a = 0;
+			int b = 0;
 			for (int i = 0; i < maxLine; i++) {
 				transId = String.valueOf(i + 1);
-				custId = generateTransactions.getCustId(random);
+				custId = generateTransactions.getCustId(random);				
+				if (custId.equals("42577")) {
+					a++;	
+				}
+				if (custId.equals("2000")) {
+					b++;
+				}
+				
 				transTotal = generateTransactions.getTransTotal(random);
 				transNumItems = generateTransactions.getTransNumItems(random);
 				transDesc = generateTransactions.getTransDesc(random);
@@ -71,6 +80,8 @@ public class GenerateTransactions {
 						+ transNumItems + "," + transDesc);
 				outCustomers.write(line + "\r\n");
 			}
+			System.out.println(a);
+			System.out.println(b);
 			outCustomers.close();
 		} catch (Exception e) {
 			e.printStackTrace();
